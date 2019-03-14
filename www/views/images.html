@@ -1,0 +1,32 @@
+<ion-view cache-view="false">
+   <ion-nav-title>
+    <div translate="ORDER_PHOTOS"></div>
+  </ion-nav-title>
+    <ion-content>
+     <div class="row">
+         
+          <div class="col">
+              <button class="button button-block button-royal icon-left ion-android-phone-portrait"  ng-click="choosePhoto()" translate="SELECT_PHOTO"></button>
+          </div>
+          <div class="col">
+              <button class="button button-block button-balanced icon-left ion-camera" ng-click="takePhoto()" translate="TAKE_PHOTO"></button>
+          </div>
+     </div>
+      
+      <div class="row" ng-repeat="image in photos" ng-if="$index % 3 === 0">
+        <div class="col col-33 image_wrap" ng-if="$index < photos.length">
+            <button class="button button-icon icon ion-trash-b delete_image" ng-click="showConfirm(photos[$index].photo_id)"></button>
+            <a href="{{apiUrl}}upload/800/{{photos[$index].photo}}" class="modal-gallery"><img ng-src="{{apiUrl}}upload/200-200/{{photos[$index].photo}}" width="100%" /></a>
+        </div>
+        <div class="col col-33 image_wrap" ng-if="$index + 1 < photos.length">
+           <button class="button button-icon icon ion-trash-b delete_image" ng-click="showConfirm(photos[$index + 1].photo_id)"></button>
+            <a href="{{apiUrl}}upload/800/{{photos[$index + 1].photo}}" class="modal-gallery"><img ng-src="{{apiUrl}}upload/200-200/{{photos[$index + 1].photo}}" width="100%" /></a>
+        </div>
+        <div class="col col-33 image_wrap" ng-if="$index + 2 < photos.length">
+           <button class="button button-icon icon ion-trash-b delete_image" ng-click="showConfirm(photos[$index + 2].photo_id)"></button>
+            <a href="{{apiUrl}}upload/800/{{photos[$index + 2].photo}}" class="modal-gallery"><img ng-src="{{apiUrl}}upload/200-200/{{photos[$index + 2].photo}}" width="100%" /></a>
+        </div>
+    </div>
+   
+    </ion-content>
+</ion-view>

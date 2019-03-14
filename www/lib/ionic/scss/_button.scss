@@ -70,6 +70,11 @@
     margin-top: $button-block-margin;
     margin-bottom: $button-block-margin;
   }
+  
+  &.button-block_alt, &.button-full_alt {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
 
   &.button-light {
     @include button-style($button-light-bg, $button-default-border, $button-light-active-bg, $button-default-active-border, $button-light-text);

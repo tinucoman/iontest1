@@ -68,3 +68,11 @@
 .menu-animated {
   @include transition-transform($menu-animation-speed ease);
 }
+
+.item-dark .greeting {
+	color: $button-positive-text;
+}
+.item-dark.item-avatar .icon, 
+.item-dark .message {
+	color: rgba( $button-positive-text, .6 );
+}

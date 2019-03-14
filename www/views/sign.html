@@ -1,0 +1,20 @@
+<ion-view cache-view="false">
+   <ion-nav-title>
+    <div translate="SIGN"></div>
+  </ion-nav-title>
+    <ion-content scroll="false">
+
+    <div class="row">
+         
+          <div class="col">
+              <button class="button button-block button-royal icon-left ion-checkmark-round"  ng-click="saveCanvas()" translate="DONE"></button>
+          </div>
+          <div class="col">
+              <button class="button button-block button-balanced icon-left ion-ios-refresh-outline" ng-click="clearCanvas()" translate="RESET"></button>
+          </div>
+     </div>
+
+    <div class="row"><canvas id='signatureCanvas' width='{{canvasWidth}}' height='{{canvasHeight}}' style='border: 1px solid #f5f5f5;'></canvas></div>
+
+    </ion-content>
+</ion-view>

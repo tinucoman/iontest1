@@ -70,6 +70,18 @@
   }
 }
 
+.card-alt {
+  margin: $content-padding;
+  box-shadow: none;
+  border-width: $item-border-width;
+  border-style: solid;
+  border-color: $item-default-border;
+
+  .item {
+	padding: ($content-padding - 4) $content-padding;
+  }  
+}
+
 .padding {
   .card, .list-inset {
     margin-left: 0;

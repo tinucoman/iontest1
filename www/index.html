@@ -1,45 +1,126 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Asogem Repair</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title></title>
-
-    <link rel="manifest" href="manifest.json">
-
-    <!-- un-comment this code to enable service worker
-    <script>
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('service-worker.js')
-          .then(() => console.log('service worker installed'))
-          .catch(err => console.log('Error', err));
-      }
-    </script>-->
-
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="lib/ion-gallery/ion-gallery.css">
+    <link rel="stylesheet" type="text/css" href="lib/swipebox/css/swipebox.css">
 
-    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
-    <link href="css/ionic.app.css" rel="stylesheet">
-    -->
-
-    <!-- ionic/angularjs js -->
+    <script src="lib/jquery/jquery-1.11.1.min.js"></script>
+    <script src="lib/swipebox/js/jquery.swipebox.js"></script>
+    <script src="lib/signature/signature_pad.js"></script>
     <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="lib/angular/ngstorage.min.js"></script>
+    <script src="lib/angular/ng-cordova.min.js"></script>
+    <script src="lib/angular/ng-file-upload-all.min.js"></script>
+    <script src="lib/angular/angular-translate.min.js"></script>
+    <script src="lib/ion-gallery/ion-gallery.js"></script>
+    <!-- uncomment this line for build -->
+     <script type="text/javascript" src="cordova.js"></script> 
+    
+   <script src="js/app.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/translations.js"></script>
+    <script src="js/routes.js"></script>
+   <script src="js/controllers/mlistCtrl.js"></script>
+   <script src="js/controllers/editCtrl.js"></script>
+   <script src="js/controllers/imagesCtrl.js"></script>
+   <script src="js/controllers/signCtrl.js"></script>
 
-    <!-- cordova script (this will be a 404 during development) -->
-    <script src="cordova.js"></script>
+</head>
+<body class="platform-android use-material-icons" ng-app="asogem">
+<ion-side-menus enable-menu-with-back-views="false">
+  <ion-side-menu-content class="post-size-14px">
+    <ion-nav-bar class="bar app-top-bar bar-dark">
+      <ion-nav-back-button ng-click="showSearchBtn(); $ionicGoBack();"></ion-nav-back-button>
+      <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left"> </button>
+      </ion-nav-buttons>
+      <ion-nav-buttons side="right">
+        <button class="button button-icon button-clear ion-android-search" ng-click="showSearch()" ng-show="showSearchButton"> </button>
+      </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-nav-view></ion-nav-view>
+  </ion-side-menu-content>
 
-    <!-- your app's js -->
-    <script src="js/app.js"></script>
-  </head>
-  <body ng-app="starter">
+  <ion-side-menu side="left" class="main-menu menu-dark" expose-aside-when="large">
+    <ion-content>
+      <ion-list>
+        <ion-item class="heading-item item item-dark">
+          <img class="img-responsive" src="img/asogem_logo.png" width="142" height="32" alt=""> 
+        </ion-item>
+        <ion-item class="heading-item item item-dark item-avatar">
+          <div class="item-icon-left">
+            <i class="icon ion-android-person"></i>
+          </div>
+          <h2 class="greeting">{{firstname}} {{lastname}}</h2>
+          <p class="message"  translate="WELCOME_BACK"></p>
+        </ion-item>
+          <ion-item class="item-icon-left item-dark" nav-clear="" menu-close="" ui-sref="mlist">
+              <i class="icon ion-android-clipboard"></i>
+              <span class="menu-text" translate="NEW_ORDERS">New</span>
+          </ion-item>
+          <ion-item class="item-icon-left item-dark" nav-clear="" menu-close="" ui-sref="tobescreened">
+              <i class="icon ion-android-add-circle"></i>
+              <span class="menu-text">To Be Screened</span>
+              <span class="badge badge-assertive">{{tbscreened}}</span>
+          </ion-item>
+          <ion-item class="item-icon-left item-dark" nav-clear="" menu-close="" ui-sref="mlist2">
+              <i class="icon ion-clock"></i>
+              <span class="menu-text" translate="PENDING_ORDERS">Pending</span>
+          </ion-item>
+          <ion-item class="item-icon-left item-dark" nav-clear="" menu-close="" ui-sref="removed">
+              <i class="icon ion-minus-circled"></i>
+              <span class="menu-text" translate="REMOVED">Removed</span>
+          </ion-item>
+          <ion-item class="item-icon-left item-dark" nav-clear="" menu-close="" ui-sref="mfinished">
+          <i class="icon ion-ios-checkmark"></i>
+          <span class="menu-text"  translate="ARCHIVED_ORDERS">Afgewerkt</span>
+        </ion-item>
+        <ion-item class="item-icon-left item-dark" nav-clear="" menu-close="" ng-click="logout()">
+          <i class="icon ion-log-out"></i>
+          <span class="menu-text" translate="SIGN_OUT"></span>
+        </ion-item>
+          <ion-item class="item-dark" ng-if="benl == 1">
+              <div class="row">
+                  <div class="col"><button class="button button-block {{langStyle2}}" ng-click="setLang('2')">FR</button></div>
+                  <div class="col"><button class="button button-block {{langStyle1}}" ng-click="setLang('1')">NL</button></div>
+              </div>
+          </ion-item>
 
-    <ion-pane>
-      <ion-header-bar class="bar-stable">
-        <h1 class="title">Ionic Blank Starter</h1>
-      </ion-header-bar>
-      <ion-content>
-      </ion-content>
-    </ion-pane>
-  </body>
+      </ion-list>
+    </ion-content>
+  </ion-side-menu>
+</ion-side-menus>
+   <script id="templates/login.html" type="text/ng-template">
+       <ion-modal-view>
+           <ion-header-bar class="bar bar-header bar-dark">
+               <h1 class="title" translate="LOG_IN"></h1>
+           </ion-header-bar>
+           <ion-content class="padding">
+               <div class="row assertive">{{errorcode}}</div>
+               <form name="myForm" novalidate="novalidate">
+               <div class="list">
+                   <label class="item item-input">
+                       <span class="input-label" translate="USERNAME"></span>
+                       <input ng-model="user.username" type="text" required name="username" ng-class="{'has-error': !myForm.username.$valid && validateForm}">
+                   </label>
+                   <label class="item item-input">
+                       <span class="input-label" translate="PASSWORD"></span>
+                       <input ng-model="user.password" type="password" required name="password"  ng-class="{'has-error': !myForm.password.$valid && validateForm}">
+                   </label>
+
+                   <button class="button button-full button-calm" ng-click="auth(user)">Log In</button>
+
+               </div>
+               </form>
+               <div class="row center">Version: {{version}}</div>
+           </ion-content>
+       </ion-modal-view>
+   </script>
+</body>
 </html>

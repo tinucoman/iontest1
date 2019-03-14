@@ -164,3 +164,21 @@ a.subdued {
     padding-right: 0;
   }
 }
+
+a.text-muted {
+  color: $muted;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+a.text-calm {
+  color: $calm;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+  }
+}

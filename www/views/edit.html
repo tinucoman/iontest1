@@ -1,0 +1,563 @@
+<ion-view cache-view="false">
+    <ion-nav-title>
+        #{{vm.order.order_nr}}
+    </ion-nav-title>
+    <ion-nav-buttons side="right">
+        <button class="button button-icon icon ion-edit" ui-sref="sign({'order_id': vm.order_id})" ng-click="autosave();"></button>
+        <button class="button button-icon icon ion-camera" ui-sref="images({'order_id': vm.order_id})" ng-click="autosave();"></button>
+    </ion-nav-buttons>
+    <ion-content class="has-footer">
+        <div class="padding-horizontal padding-top">
+            <p class="text-muted">
+                <span class="padding-right">
+                  <span class="icon ion-ios-calendar padding-right-half"></span> {{vm.order.DATE_REQUEST}}
+                </span>
+                <span class="icon ion-briefcase padding-right-half"></span> {{vm.order.CLIENT_NR}} {{vm.order.CLIENT_NAME}}
+            </p>
+            <div>
+                <a class="text-calm" ng-click="driveTo(vm.order.CLIENT_STREET + ', ' + vm.order.CLIENT_POSTAL + ', ' + vm.order.CLIENT_CITY)"><span class="icon ion-ios-location padding-right-half"></span> {{vm.order.CLIENT_STREET}} {{vm.order.CLIENT_POSTAL}} {{vm.order.CLIENT_CITY}}</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-center" ng-if="vm.order.HIDE_C_PHONE">
+                <a class="button button-block button-block_alt button-outline button-dark icon-left ion-android-call" ng-href="tel:{{vm.order.CLIENT_PHONE}}">{{vm.order.CLIENT_PHONE}}</a>
+            </div>
+            <div class="col text-center" ng-if="vm.order.HIDE_C_MOBILE">
+                <a class="button button-block button-block_alt button-outline button-dark icon-left ion-android-phone-portrait" ng-href="tel:{{vm.order.CLIENT_MOBILE}}">{{vm.order.CLIENT_MOBILE}}</a>
+            </div>
+        </div>
+        <label class="item item-input item-input-alt item-select">
+            <span class="input-label">SMS Lang</span>
+            <select name="sms_language" ng-model="vm.order.sms_language" class="form-control">
+                <option value="1">NL</option>
+                <option value="2">FR</option>
+            </select>
+        </label>
+        <label class="item item-input item-input-alt item-select">
+            <span class="input-label" translate="ARRIVING"></span>
+            <select name="arrive" ng-model="vm.arrive">
+                <option ng-repeat="item in vm.arrive_values">{{item}}</option>
+            </select>
+        </label>
+
+        <div class="row" ng-if="vm.order.sms_language == 1">
+            <div class="col text-center" ng-if="vm.order.HIDE_C_PHONE">
+                <a class="button button-block button-block_alt button-outline button-dark icon-left ion-android-textsms" href="sms://{{vm.order.CLIENT_PHONE}}?body=Beste klant , ik ben onderweg en zal ongeveer over  {{vm.arrive}} bij u aankomen, indien u niet aanwezig kunt zijn, gelieve mij op dit nummer te contacteren. Uw technieker ASOGEM">{{vm.order.CLIENT_PHONE}}</a>
+            </div>
+            <div class="col text-center" ng-if="vm.order.HIDE_C_MOBILE">
+                <a class="button button-block button-block_alt button-outline button-dark icon-left ion-android-textsms" href="sms://{{vm.order.CLIENT_MOBILE}}?body=Beste klant , ik ben onderweg en zal ongeveer over  {{vm.arrive}} bij u aankomen, indien u niet aanwezig kunt zijn, gelieve mij op dit nummer te contacteren. Uw technieker ASOGEM">{{vm.order.CLIENT_MOBILE}}</a>
+            </div>
+        </div>
+        <div class="row" ng-if="vm.order.sms_language == 2">
+            <div class="col text-center" ng-if="vm.order.HIDE_C_PHONE">
+                <a class="button button-block button-block_alt button-outline button-dark icon-left ion-android-textsms" href="sms://{{vm.order.CLIENT_PHONE}}?body=Cher client, je suis en route et serais chez vous dans approximativement {{vm.arrive}}, si vous ne pouvez pas être présent, veuillez me contacter sur ce numéro. Votre technicien ASOGEM">{{vm.order.CLIENT_PHONE}}</a>
+            </div>
+            <div class="col text-center" ng-if="vm.order.HIDE_C_MOBILE">
+                <a class="button button-block button-block_alt button-outline button-dark icon-left ion-android-textsms" href="sms://{{vm.order.CLIENT_MOBILE}}?body=Cher client, je suis en route et serais chez vous dans approximativement {{vm.arrive}}, si vous ne pouvez pas être présent, veuillez me contacter sur ce numéro. Votre technicien ASOGEM">{{vm.order.CLIENT_MOBILE}}</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label class="item item-input item-input-alt item-stacked-label">
+                    <span class="input-label" translate="CLIENT_EMAIL"></span>
+                    <input type="text" ng-model="vm.order.CLIENT_EMAIL">
+                </label>
+            </div>
+        </div>
+        <div class="padding-horizontal padding-top  stable-bg">
+            <h5><span translate="RESELLER"></span> {{vm.order.RESELLER_NR}} {{vm.order.RESELLER_NAME}}</h5>
+            <div class="text-muted"><span class="icon ion-ios-location padding-right-half"></span> {{vm.order.RESELLER_STREET}} {{vm.order.RESELLER_POSTAL}} {{vm.order.RESELLER_CITY}}</div>
+        </div>
+        <div class="row stable-bg">
+            <div class="col text-center" ng-if="vm.order.HIDE_R_PHONE">
+                <a class="button button-block button-block_alt button-outline button-stable icon-left ion-android-call" ng-href="tel: {{vm.order.RESELLER_PHONE}}">{{vm.order.RESELLER_PHONE}}</a>
+            </div>
+            <div class="col text-center" ng-if="vm.order.HIDE_R_MOBILE">
+                <a class="button button-block button-block_alt button-outline button-stable icon-left ion-android-phone-portrait" ng-href="tel: {{vm.order.RESELLER_MOBILE}}">{{vm.order.RESELLER_MOBILE}}</a>
+            </div>
+        </div>
+        <div class="padding-horizontal padding-top">
+            <p><strong>Art. #</strong> {{vm.order.DEVICE_CAT_NR}}</p>
+            <p><strong translate="DEVICE_DESC"></strong>
+                <br> {{vm.order.DEVICE_DESC}}
+            </p>
+        </div>
+        <div class="card card-alt" ng-if="vm.order.problem_desc1">
+            <div class="item item-divider small">
+                <span translate="PROBLEM_DESC"></span> 1
+            </div>
+            <div class="item item-text-wrap">
+                {{vm.order.problem_desc1}}
+            </div>
+        </div>
+        <div class="card card-alt" ng-if="vm.order.problem_desc2">
+            <div class="item item-divider small">
+                <span translate="PROBLEM_DESC"></span> 2
+            </div>
+            <div class="item item-text-wrap">
+                {{vm.order.problem_desc2}}
+            </div>
+        </div>
+        <div class="card card-alt" ng-if="vm.order.problem_desc3">
+            <div class="item item-divider small">
+                <span translate="PROBLEM_DESC"></span> 3
+            </div>
+            <div class="item item-text-wrap">
+                {{vm.order.problem_desc3}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <button class="button button-block small" ng-class="vm.order.repair_status == '1' ? 'button-balanced' : 'button-balanced button-outline'"  ng-click="vm.statusUpdate('1')">Sp Ordered</button>
+            </div>
+            <div class="col">
+                <button class="button button-block small" ng-class="vm.order.repair_status == '2' ? 'button-balanced' : 'button-balanced button-outline'"  ng-click="vm.statusUpdate('2')">Repair Asogem</button>
+            </div>
+            <div class="col">
+                <button class="button button-block small" ng-class="vm.order.repair_status == '3' ? 'button-balanced' : 'button-balanced button-outline'"  ng-click="vm.statusUpdate('3')">Replacement</button>
+            </div>
+        </div>
+        <div class="list">
+            <div class="row">
+                <div class="col">
+                    <ion-toggle ng-model="vm.order.f_guaranty" class="toggle-small item-input-alt" ng-true-value="'1'" ng-false-value="'0'" toggle-class="toggle-calm" class="toggle-small"><span translate="WARRANTY"></span></ion-toggle>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-90">
+                    <label class="item item-input item-input-alt item-stacked-label">
+                        <span class="input-label assertive" translate="DEVICE_SERIAL"></span>
+                        <input type="text" placeholder="NIET GEKEND" ng-model="vm.order.device_serial" name="device_serial">
+                    </label>
+                </div>
+                <div class="col col-10">
+                    <button class="button button-icon icon ion-ios-barcode-outline" ng-click="barcodeScanDeviceSerial(vm.order.DEVICE_CAT_NR)"></button>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label class="item item-input item-input-alt item-stacked-label">
+                        <span class="input-label" translate="PRODUCT_CODE"></span>
+
+                        <input type="text" ng-model="vm.order.prod_code1" name="prod_code1" placeholder="XX-XXXXXX-XX">
+
+                    </label>
+                    <label class="item item-input item-input-alt item-stacked-label">
+                        <span class="input-label assertive" translate="PURCHASE_DATE">Aankoopdatum</span>
+                        <input type="date" ng-model="vm.order.device_date_purchase">
+                    </label>
+                    <label class="item item-input item-input-alt item-stacked-label">
+                        <span class="input-label" translate="PURCHASE_INVOICE_NR"></span>
+                        <input type="text" ng-model="vm.order.invoice_nr_purchase" name="invoice_nr_purchase" placeholder="NIET GEKEND">
+                    </label>
+                    <label class="item item-input item-input-alt item-stacked-label">
+                        <span class="input-label assertive" translate="REPAIR_DATE"></span>
+                        <input type="date" ng-model="vm.order.date_repair">
+                    </label>
+                    <label class="item item-input item-input-alt item-stacked-label">
+                        <span class="input-label" translate="LOCATION">Locatie</span>
+                        <input type="text" ng-model="vm.order.repair_location" name="repair_location" placeholder="NIET GEKEND">
+                    </label>
+
+
+
+                    <label class="item item-input item-input-alt item-stacked-label">
+                        <span class="input-label small">810{{vm.order.RESELLER_USERNAME}} {{vm.order.DECRIPTION810XX}}</span>
+                        <div class="item-input-addon">
+                            <span class="input-addon">%</span>
+                            <input type="text" name="discount_810XX" ng-model="vm.order.DISC810XX">
+                        </div>
+                        <div class="item-input-addon">
+                            <span class="input-addon">€</span>
+                            <input type="text" name="costtype_810XX" ng-model="vm.order.PRICE810XX" readonly ng-change="vm.calculateTotal()">
+                        </div>
+                    </label>
+                    <label class="item item-input item-input-alt no-circle item-select">
+                        <select name="invoicing" ng-model="vm.order.invoicing810" ng-change="vm.calculateTotal()">
+                            <option ng-repeat="item in vm.order.INVOICING">{{item}}</option>
+                        </select>
+                    </label>
+
+                    <label class="item item-input item-input-alt item-stacked-label">
+                        <span class="input-label small">800{{vm.order.RESELLER_USERNAME}} {{vm.order.DECRIPTION800XX}}</span>
+                        <div class="item-input-addon">
+                            <span class="input-addon">%</span>
+                            <input type="text" name="discount_800XX" ng-model="vm.order.DISC800XX" ng-change="vm.calculateTotal()">
+                        </div>
+                        <div class="item-input-addon">
+                            <span class="input-addon">€</span>
+                            <input type="text" name="costtype_800XX" ng-model="vm.order.PRICE800XX" readonly ng-change="vm.calculateTotal()">
+                        </div>
+                    </label>
+                    <label class="item item-input item-input-alt  no-circle item-select">
+                        <span class="input-label" translate="HOURS"></span>
+                        <select name="workhours" ng-model="vm.order.workhours" ng-change="vm.calculateTotal()">
+                            <option ng-repeat="item in vm.order.WORKHOURS">{{item}}</option>
+                        </select>
+                    </label>
+                    <label class="item item-input item-input-alt item-stacked-label" ng-if="benl == 1">
+                        <span class="input-label small">805{{vm.order.RESELLER_USERNAME}} <span translate="805LABEL"></span></span>
+                        <div class="item-input-addon">
+                            <span class="input-addon">€</span>
+                            <input type="text" name="costtype_805" ng-model="vm.order.PRICE_805" readonly ng-change="vm.calculateTotal()">
+                        </div>
+                    </label>
+                    <label class="item item-input item-input-alt  no-circle item-select">
+                        <select name="invoicing" ng-model="vm.order.invoicing805" ng-change="vm.change805()">
+                            <option ng-repeat="item in vm.order.INVOICING">{{item}}</option>
+                        </select>
+                    </label>
+                    <label class="item item-input item-input-alt item-stacked-label">
+                        <span class="input-label small">{{vm.order.ARCAT_NO850F}} {{vm.order.DECRIPTION850F}}</span>
+                        <div class="item-input-addon">
+                            <span class="input-addon">€</span>
+                            <input type="text" name="costtype_850F" ng-model="vm.order.PRICE850F" readonly ng-change="vm.calculateTotal()">
+                        </div>
+                    </label>
+                    <label class="item item-input item-input-alt  no-circle item-select">
+                        <select name="invoicing" ng-model="vm.order.invoicing" ng-change="vm.calculateTotal()">
+                            <option ng-repeat="item in vm.order.INVOICING">{{item}}</option>
+                        </select>
+                    </label>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <h5 class="padding-horizontal" translate="SPAREPARTS"></h5>
+        </div>
+        <div class="padding-horizontal row">
+            <ion-list show-delete="true">
+                <ion-item ng-repeat="item in vm.order.spareParts" class="padding-horizontal">
+                    <ion-delete-button class="ion-minus-circled" ng-click="vm.deleteSparePart(item)"></ion-delete-button>
+                    {{item.CODE}} {{item.DESC}}
+                    <p class="small text-muted">
+                        <span translate="PRICE"></span>: € {{item.PRICE}}; <span translate="PRICE_CODE"></span>: {{item.PRICE_CODE}}; <span translate="DISCOUNT"></span>: {{item.DISCOUNT}}; <span translate="QUANTITY">Aantal</span>: {{item.PIECES}};
+                    </p>
+                </ion-item>
+            </ion-list>
+        </div>
+
+        <div class="row">
+            <h5 class="padding-horizontal" translate="ORDERSPAREPARTS"></h5>
+        </div>
+        <div class="padding-horizontal row">
+            <ion-list show-delete="true">
+                <ion-item ng-repeat="item in vm.order.orderSpareParts" class="padding-horizontal">
+                    <ion-delete-button class="ion-minus-circled" ng-click="vm.deleteOrderSparePart(item)"></ion-delete-button>
+                    {{item.CODE}} {{item.DESC}}
+                    <p class="small text-muted">
+                        <span translate="PRICE"></span>: € {{item.PRICE}}; <span translate="PRICE_CODE"></span>: {{item.PRICE_CODE}}; <span translate="DISCOUNT"></span>: {{item.DISCOUNT}}; <span translate="QUANTITY">Aantal</span>: {{item.PIECES}};
+                    </p>
+                </ion-item>
+            </ion-list>
+        </div>
+        <!--
+        <div class="row" ng-if="vm.order.orderSpareParts.length > 0">
+            <div class="col">
+                <button class="button button-block small button-royal" ng-click="vm.saveOrderedSpareParts()">Send Order</button>
+            </div>
+        </div>
+        -->
+        <div class="row">
+            <div class="col" ng-if="vm.order.screeningExists">
+                <button class="button button-block button-royal icon-left ion-arrow-expand" ng-click="exploded_view('http://repair.asogem.be/files/screening/WB' + vm.order.order_nr + '.pdf')" translate="SCREENING"  ng-if="benl == 1"></button>
+                <button class="button button-block button-royal icon-left ion-arrow-expand" ng-click="exploded_view('http://repair.asogem.nl/files/screening/WB' + vm.order.order_nr + '.pdf')" translate="SCREENING"  ng-if="benl == 2"></button>
+            </div>
+            <div class="col">
+                <button class="button button-block button-balanced icon-left ion-plus-circled" ng-click="openModal(vm.order.DEVICE_CAT_NR, vm.order.order_nr)" translate="ADD_SPAREPART"></button>
+            </div>
+        </div>
+        <div class="list padding-top">
+            <label class="item item-input item-input-alt item-select">
+                <span class="input-label assertive" translate="PROBLEMCODE"></span>
+                <select name="problem_code_id" ng-model="vm.order.problem_code_id">
+                    <option ng-repeat="item in vm.order.PROBLEM_CODE_DD" value="{{item.id}}">{{item.name}}</option>
+                </select>
+            </label>
+            <label class="item item-input item-input-alt item-stacked-label">
+                <span class="input-label"><span translate="COMMENTS"></span> 1 <small class="text-muted">(max 60char)</small></span>
+                <input type="text" ng-model="vm.order.comment1" maxlength="60" name="comment1">
+            </label>
+            <label class="item item-input item-input-alt item-stacked-label">
+                <span class="input-label"><span translate="COMMENTS"></span> 2 <small class="text-muted">(max 60char)</small></span>
+                <input type="text" ng-model="vm.order.comment2" maxlength="60" name="comment2">
+            </label>
+        </div>
+
+        <!--
+        <ion-toggle ng-model="vm.order.f_exchange" class="toggle-small item-input-alt" ng-true-value="'1'" ng-false-value="'0'" toggle-class="toggle-calm" class="toggle-small"><span translate="EXCHANGE"></span></ion-toggle>
+-->
+        <ion-toggle ng-model="vm.order.f_payed" class="toggle-small item-input-alt" ng-if="vm.order.f_guaranty!=1" ng-true-value="'1'" ng-false-value="'0'" toggle-class="toggle-calm" class="toggle-small"><span translate="BETALING_VOLDAAN"></span></ion-toggle>
+
+        <label class="item item-input item-input-alt item-stacked-label item-select" ng-if="vm.order.f_guaranty=='0' && vm.order.f_payed=='1'">
+            <span class="input-label" translate="betaalmethode"></span>
+            <select name="payment_id" ng-model="vm.order.payment_id" class="form-control">
+                <option ng-repeat="item in vm.order.PAYMENT_DD" value="{{item.id}}">{{item.name}}</option>
+            </select>
+        </label>
+
+
+        <label class="item item-input  item-input-alt item-stacked-label" ng-if="vm.order.f_guaranty!='1' && vm.order.f_payed!='1'">
+            <span class="input-label padding-bottom" translate="INVOICE_DISTR"></span>
+            <ion-radio ng-model="f_invoice_distr" ng-value="'2'"><span translate="Eigenaar"></span></ion-radio>
+            <ion-radio ng-model="f_invoice_distr" ng-value="'1'"><span translate="Verdeler"></span></ion-radio>
+        </label>
+
+
+        <div class="list" ng-if="vm.order.f_guaranty!=1">
+            <label class="item item-input item-input-alt item-stacked-label">
+                <span class="input-label" translate="VAT_PERCENTAGE"></span>
+                <div class="item-input-addon padding-bottom">
+                    <span class="input-addon">€</span>
+                    <input type="text" disabled="" class="form-control" id="total_notax" ng-model="vm.order.total_notax">
+                </div>
+                <div class="item-input-addon">
+                    <span class="input-addon">€</span>
+                    <input type="text" disabled="" class="form-control" id="tax" ng-model="vm.order.total_tax">
+                </div>
+                <div class="item-input-addon">
+                    <span class="input-addon">€</span>
+                    <input type="text" disabled="" class="form-control" id="total" ng-model="vm.order.total">
+                </div>
+            </label>
+        </div>
+
+        <ion-toggle ng-model="vm.order.screened" class="toggle-small item-input-alt" ng-true-value="'1'" ng-false-value="'0'" toggle-class="toggle-calm" class="toggle-small"><span>Screened</span></ion-toggle>
+
+
+        <label class="item item-input item-input-alt item-select">
+            <span class="input-label">Email Lang</span>
+            <select name="email_language" ng-model="vm.order.email_language" class="form-control">
+                <option value="nl">NL</option>
+                <option value="fr">FR</option>
+            </select>
+        </label>
+        <div class="padding">
+            <button class="button button-block button-royal" ng-click="vm.save(1)" translate="SAVE_ARCHIVE">
+            </button>
+        </div>
+
+    </ion-content>
+    <ion-footer-bar>
+        <button class="button button-block button-block_alt button-calm" ng-click="vm.save()" translate="SAVE">
+        </button>
+    </ion-footer-bar>
+    <script id="templates/modal.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-header-bar class="bar bar-header bar-dark">
+                <h1 class="title" translate="ADD_SPAREPART"></h1>
+                <button class="button button-clear button-primary" ng-click="modal.hide()" translate="CANCEL"></button>
+            </ion-header-bar>
+
+            <ion-tabs class="tabs-dark tabs-icon-top">
+                <ion-tab title="Recommended" icon-on="ion-ios-gear" icon-off="ion-ios-gear-outline" hidden="{{!vm.showRecommended}}">
+                    <div class="bar bar-subheader item-input-inset">
+                        <label class="item-input-wrapper">
+                            <i class="icon ion-ios-search placeholder-icon"></i>
+                            <input type="text" placeholder="..." name="searchTerm" ng-model="vm.searchTerm" ng-keyup="searchSparePart(vm.order.DEVICE_CAT_NR, vm.searchTerm)">
+                        </label>
+                        <button class="button button-clear button-dark" ng-click="barcodeScan(vm.order.DEVICE_CAT_NR)"><i class="icon ion-ios-barcode-outline"></i></button>
+                    </div>
+                    <ion-content class="has-subheader">
+                        <ion-list>
+                            <div ng-repeat="item in apiSparePartsR">
+                                <ion-item class="item item-accordion-title" ng-click="toggleGroup2(item.sparepart_id)" ng-class="{active: isGroupShown2(item.sparepart_id)}">
+                                    <i class="icon muted" ng-class="isGroupShown2(item.sparepart_id) ? 'ion-minus' : 'ion-plus'"></i> &nbsp;
+                                    <strong>{{item.sparepart_id}}</strong> <span class="small">S:{{item.s}}</span> <span class="small muted">{{item.sparepart}}</span>
+                                </ion-item>
+                                <ion-item class="item-accordion" ng-show="isGroupShown2(item.sparepart_id)">
+                                    <div class="row">
+                                        <div class="col-20">
+                                            <label class="item-input item-input-alt-plain">
+                                                <span class="input-label">€</span>
+                                                <input class="text-center" type="text" ng-model="item.price" disabled>
+                                            </label>
+                                        </div>
+                                        <div class="col-40">
+                                            <label class="item-input item-input-alt-plain">
+                                                <span class="input-label" translate="QUANTITY"></span>
+                                                <input class="text-center" type="text" ng-model="item.aantal">
+                                            </label>
+                                        </div>
+                                        <div class="col-40">
+                                            <label class="item-input item-input-alt-plain">
+                                                <span class="input-label" translate="DISCOUNT_SHORT"></span>
+                                                <input class="text-center" type="text" ng-model="item.discount">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="row padding-left-extra">
+                                        <div class="col">
+                                            <button class="button button-block button-balanced" ng-click="vm.spareAdd('add', item)">
+                                                Add
+                                            </button>
+                                        </div>
+                                        <!-- <div class="col">
+                                            <button class="button button-block button-royal" ng-click="vm.spareAdd('add_order', item)">
+                                                Add + Order
+                                            </button>
+                                        </div> -->
+                                        <div class="col">
+                                            <button class="button button-block button-royal" ng-click="vm.spareAdd('order', item)">
+                                                Order
+                                            </button>
+                                        </div>
+                                    </div>
+                                </ion-item>
+                            </div>
+                        </ion-list>
+                    </ion-content>
+                    <ion-infinite-scroll on-infinite="loadMoreR(vm.order.DEVICE_CAT_NR)" distance="1%">
+                    </ion-infinite-scroll>
+                </ion-tab>
+
+                <ion-tab title="Spare Parts" icon-on="ion-ios-cog" icon-off="ion-ios-cog-outline">
+                    <div class="bar bar-subheader item-input-inset">
+                        <label class="item-input-wrapper">
+                            <i class="icon ion-ios-search placeholder-icon"></i>
+                            <input type="text" placeholder="..." name="searchTerm" ng-model="vm.searchTerm" ng-keyup="searchSparePart(vm.order.DEVICE_CAT_NR, vm.searchTerm)">
+                        </label>
+                        <button class="button button-clear button-dark" ng-click="barcodeScan(vm.order.DEVICE_CAT_NR)"><i class="icon ion-ios-barcode-outline"></i></button>
+                    </div>
+                    <ion-content class="has-subheader">
+                        <ion-list>
+                            <div>
+                                <ion-item class="item item-accordion-title active">
+                                    <strong>Manueel toevoegen</strong>
+                                </ion-item>
+                                <ion-item class="item-accordion">
+                                    <div class="row">
+                                        <div class="col">
+                                            <label class="item-input item-input-alt-plain">
+                                                <span class="input-label">Onderdelen</span>
+                                                <input class="text-center" type="text" ng-model="vm.addSpare.spare_desc">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <label class="item-input item-input-alt-plain">
+                                                <span class="input-label">Code</span>
+                                                <input class="text-center" type="text" ng-model="vm.addSpare.spare_code">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-20">
+                                            <label class="item-input item-input-alt-plain">
+                                                <span class="input-label">€</span>
+                                                <input class="text-center" type="text" ng-model="vm.addSpare.spare_price">
+                                            </label>
+                                        </div>
+                                        <div class="col-40">
+                                            <label class="item-input item-input-alt-plain">
+                                                <span class="input-label" translate="QUANTITY"></span>
+                                                <input class="text-center" type="text" ng-model="vm.addSpare.pieces">
+                                            </label>
+                                        </div>
+                                        <div class="col-40">
+                                            <label class="item-input item-input-alt-plain">
+                                                <span class="input-label" translate="DISCOUNT_SHORT"></span>
+                                                <input class="text-center" type="text" ng-model="vm.addSpare.spare_discount">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="row padding-left-extra">
+                                        <div class="col">
+                                            <button class="button button-block button-balanced" ng-click="vm.addSparePart(vm.addSpare)">
+                                                Add
+                                            </button>
+                                        </div>
+                                    </div>
+                                </ion-item>
+                            </div>
+                        </ion-list>
+                        <ion-list>
+                            <div ng-repeat="item in apiSpareParts">
+                                <ion-item class="item item-accordion-title" ng-click="toggleGroup(item.sparepart_id)" ng-class="{active: isGroupShown(item.sparepart_id)}">
+                                    <i class="icon muted" ng-class="isGroupShown(item.sparepart_id) ? 'ion-minus' : 'ion-plus'"></i> &nbsp;
+                                    <strong>{{item.sparepart_id}}</strong> <span class="small">S:{{item.s}}</span> <span class="small muted">{{item.sparepart}}</span>
+                                </ion-item>
+                                <ion-item class="item-accordion" ng-show="isGroupShown(item.sparepart_id)">
+                                    <div class="row">
+                                        <div class="col-20">
+                                            <label class="item-input item-input-alt-plain">
+                                                <span class="input-label">€</span>
+                                                <input class="text-center" type="text" ng-model="item.price" disabled>
+                                            </label>
+                                        </div>
+                                        <div class="col-40">
+                                            <label class="item-input item-input-alt-plain">
+                                                <span class="input-label" translate="QUANTITY"></span>
+                                                <input class="text-center" type="text" ng-model="item.aantal">
+                                            </label>
+                                        </div>
+                                        <div class="col-40">
+                                            <label class="item-input item-input-alt-plain">
+                                                <span class="input-label" translate="DISCOUNT_SHORT"></span>
+                                                <input class="text-center" type="text" ng-model="item.discount">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="row padding-left-extra">
+                                        <div class="col">
+                                            <button class="button button-block button-balanced" ng-click="vm.spareAdd('add', item)">
+                                                Add
+                                            </button>
+                                        </div>
+
+                                        <div class="col">
+                                            <button class="button button-block button-royal" ng-click="vm.spareAdd('order', item)">
+                                                Order
+                                            </button>
+                                        </div>
+                                    </div>
+                                </ion-item>
+                            </div>
+                        </ion-list>
+                    </ion-content>
+
+                    <ion-infinite-scroll on-infinite="loadMore(vm.order.DEVICE_CAT_NR)" distance="1%">
+                    </ion-infinite-scroll>
+                </ion-tab>
+
+                <ion-tab title="Exploded Views" icon-on="ion-ios-paper" icon-off="ion-ios-paper-outline">
+                    <div class="bar bar-subheader item-input-inset">
+                        <label> <h4>Exploded Views</h4>
+                        </label>
+                    </div>
+                    <ion-content class="has-subheader">
+                    <ion-list can-swipe="true">
+                        <ion-item ng-repeat="item in apiExplodedViews" class="item-icon-right" ng-click="exploded_view(item.EXPLODED_URL)">
+                            <i class="icon icon_small ion-android-open muted"></i> {{item.EXPLODED_NAME}}
+                        </ion-item>
+                    </ion-list>
+                    </ion-content>
+                </ion-tab>
+
+
+            </ion-tabs>
+
+
+        </ion-modal-view>
+    </script>
+    <script id="templates/modal2.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-header-bar class="bar bar-header bar-dark">
+                <h1 class="title" translate="EXPLODED_VIEWS">Exploded Views</h1>
+                <button class="button button-clear button-primary" ng-click="modal2.hide()" translate="CANCEL"></button>
+            </ion-header-bar>
+            <ion-content>
+
+                <ion-list can-swipe="true">
+                    <ion-item ng-repeat="item in apiExplodedViews" class="item-icon-right" ng-click="exploded_view(item.EXPLODED_URL)">
+                        <i class="icon icon_small ion-android-open muted"></i> {{item.EXPLODED_NAME}}
+                    </ion-item>
+                </ion-list>
+
+            </ion-content>
+        </ion-modal-view>
+    </script>
+</ion-view>

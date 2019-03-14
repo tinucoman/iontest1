@@ -1,0 +1,37 @@
+<ion-view>
+    <ion-nav-title translate="ARCHIVED_ORDERS">
+    </ion-nav-title>
+    <div class="bar bar-subheader item-input-inset" ng-show="showshearch">
+      <label class="item-input-wrapper">
+        <i class="icon ion-ios-search placeholder-icon"></i>
+        <input type="text" placeholder="..." name="search" ng-model="search" ng-keyup="init()">
+      </label>
+    </div>
+    <ion-content ng-class="{'has-subheader': showshearch}">
+        <ion-list can-swipe="true">
+
+            <ion-item ng-repeat="item in list" class="item item-icon-right"  ng-click="loadOrder()" ui-sref="finished({'order_id': item.ORDER_ID})">
+                <i class="icon ion-ios-checkmark text-muted"></i>
+                <div class="item-details">
+                <h2><strong>{{item.ORDERNR}}</strong></h2>
+                <p class="padding-bottom-half">
+                	<span class="padding-right">
+                    	<span class="icon ion-ios-calendar padding-right-half"></span>{{item.DATE_REPAIR}} 
+                    </span>
+					<span class="icon ion-briefcase padding-right-half"></span>{{item.CLIENT_NAME}} 
+                </p>
+                <p class="small text-muted">
+                 {{item.C_CITY}}, {{item.C_POSTAL}}<br>{{item.C_STREET}}
+                </p>                
+                </div>
+            </ion-item>
+
+
+        </ion-list>
+
+        <ion-infinite-scroll
+                on-infinite="loadMore()"
+                distance="1%">
+        </ion-infinite-scroll>
+    </ion-content>
+</ion-view>

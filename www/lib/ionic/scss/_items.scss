@@ -66,6 +66,12 @@
   .badge + .badge {
     margin-right: 5px;
   }
+  
+  &.item-accordion {
+    border-top: 0;
+    padding-top: 0;
+	padding-left: 14px;		 
+  }
 
   // Different themes for items
   &.item-light {
@@ -101,7 +107,6 @@
   }
 
 }
-
 .list-borderless .item,
 .item-borderless {
   border-width: 0;
@@ -309,8 +314,8 @@ a.item-content {
  * --------------------------------------------------
  */
 
-.item-icon-left .icon,
-.item-icon-right .icon {
+.item-icon-left i.icon,
+.item-icon-right i.icon {
   @include display-flex();
   @include align-items(center);
   position: absolute;
@@ -323,6 +328,11 @@ a.item-content {
     width: $item-icon-font-size;
     text-align: center;
   }
+}
+
+.item-icon-left i.icon_small,
+.item-icon-right i.icon_small {
+	font-size: $item-icon-font-size - 8;
 }
 
 .item .fill-icon {
@@ -821,10 +831,5 @@ button.item.item-button-right {
     &:before{
       margin: 0 auto;
     }
-  }
-
-  ion-option-button:last-child {
-    padding-right: calc(constant(safe-area-inset-right) + #{$button-padding});
-    padding-right: calc(env(safe-area-inset-right) + #{$button-padding});
   }
 }
