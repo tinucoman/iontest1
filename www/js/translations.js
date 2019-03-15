@@ -3,6 +3,8 @@ angular
     .config(['$translateProvider', 'appConfig', function($translateProvider, appConfig) {
         // NL
         $translateProvider.translations('1', {
+            'NEW_VERSION_AVAILABLE': 'New Version',
+            'UPDATE': 'Update Available',
             'HI': 'Hi',
             'ACTIVE_ORDERS': 'Overzicht Opdrachten',
             'ARCHIVED_ORDERS': 'Closed',
@@ -61,6 +63,8 @@ angular
 
         // FR
         $translateProvider.translations('2', {
+            'NEW_VERSION_AVAILABLE': 'New Version',
+            'UPDATE': 'Update Available',
             'HI': 'Bonjour',
             'ACTIVE_ORDERS': 'Aperçu interventions',
             'ARCHIVED_ORDERS': 'Closed',

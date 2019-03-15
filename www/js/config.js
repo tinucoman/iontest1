@@ -13,7 +13,7 @@ angular
     });
 */
 
-/*
+
 // Asogem NL
 angular
     .module('asogem')
@@ -22,15 +22,15 @@ angular
         benl: 2,
         lang_id: '1',
         version: '1.1.8',
-        //apiUrl: 'http://repair.asogem.nl/'
-        apiUrl: 'http://repair.asogem.nl/staging/'
+        apiUrl: 'http://repair.asogem.nl/'
+        //apiUrl: 'http://repair.asogem.nl/staging/'
     });
-*/
+
 
 
 
 // Asogem BE
-
+/*
 angular
     .module('asogem')
     .constant('appConfig', {
@@ -41,3 +41,4 @@ angular
         //apiUrl: 'http://repair.asogem.be/'
         apiUrl: 'http://repair.asogem.be/staging/'
     });
+*/

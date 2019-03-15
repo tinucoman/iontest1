@@ -146,6 +146,11 @@ angular
                 var discount = vm.order.DISC800XX;
                 if (angular.isDefined(discount)) {
                     discount = eval(discount.replace(',', '.'));
+                    if(!angular.isNumber(discount)){
+                        discount = '0';
+                    }
+                } else {
+                    discount = 0;
                 }
 
                 var value = vm.order.workhours;
@@ -153,12 +158,20 @@ angular
                 var costtype1 = vm.order.PRICE810XX;
                 if (angular.isDefined(costtype1)) {
                     costtype1 = eval(costtype1.replace(',', '.'));
+                } else {
+                    costtype1 = 0;
                 }
 
                 var discount1 = vm.order.DISC810XX;
                 if (angular.isDefined(discount1)) {
                     discount1 = eval(discount1.replace(',', '.'));
+                    if(!angular.isNumber(discount1)){
+                        discount1 = '0';
+                    }
+                } else {
+                    discount1 = 0;
                 }
+                
 
                 var costtype2 = vm.order.PRICE850F;
                 if (angular.isDefined(costtype2)) {
@@ -180,7 +193,7 @@ angular
 
                 var extra_cost = vm.order.PRICE999999999 ? vm.order.PRICE999999999 : '0,00';
                 extra_cost = eval(extra_cost.replace(',', '.'));
-
+                
                 total = total + ((costtype1 * (1 - discount1 / 100)) * invoicing810) + (costtype2 * invoicing) + (costtype3 * invoicing805) + extra_cost + (value * costtype * (1 - discount / 100));
                 vm.order.total_notax = total.toFixed(2);
 
@@ -290,7 +303,7 @@ angular
                     'order_nr': vm.order.order_nr
                 }
                 if(d == 'order'){
-                    if(!vm.order.prod_code1){
+                    if(!vm.order.prod_code1 && vm.order.screened == '1'){
                         if($rootScope.lang_id == 1) {
                             var errM = 'Product Code is verplicht';
                         }
@@ -308,7 +321,7 @@ angular
 
                     vm.order.repair_status = '1';
                     vm.order.tmpStatus = 1;
-                    vm.order.screened = '1';
+                    //vm.order.screened = '1';
                     showPopupSaveSend(1);
                 }
                 addSparePart(params);
@@ -674,18 +687,44 @@ angular
             };
 
             $scope.searchSparePart = function(art_id) {
+                if(vm.searchTerm.length < 3){
+                    return false;
+                }
                 $scope.apiSpareParts = [];
                 $scope.apiSparePartsR = [];
                 $scope.offset = 0;
                 $scope.loadModeData = true;
                 $scope.loadModeDataR = true;
-                $scope.loadModalData(art_id, order_id);
+                $scope.loadModalData(art_id);
             }
 
 
 
             $scope.loadModalData = function(art_id, order_id) {
+if(!order_id){
+    $http.get('http://repair.asogem.be/index.php?do=spare_parts&lang=' + $rootScope.lang_id + '&art_id=' + art_id + '&offset=' + $scope.offset + '&search=' + vm.searchTerm).then(function(d) {
+        $scope.apiSpareParts = $scope.apiSpareParts.concat(d.data.data);
+        $scope.apiSparePartsR = $scope.apiSparePartsR.concat(d.data.data);
+        if(vm.order.invoicing805 == '1'){
+            angular.forEach($scope.apiSpareParts, function(value, key){
+                value.discount = '100';
+            });
+        }
+        if(vm.order.invoicing805 == '1'){
+            angular.forEach($scope.apiSparePartsR, function(value, key){
+                value.discount = '100';
+            });
+        }
 
+        if (d.data.data.length < 100) {
+            $scope.loadModeData = false;
+        }
+        $ionicLoading.hide();
+        //console.log($scope.apiSpareParts.length);
+        $scope.offset++;
+        return true;
+    });
+}
                 //var dataSP = { 'do': 'splist', art_id: art_id, offset: $scope.offset, search: vm.searchTerm };
                 $http.get('http://repair.asogem.be/index.php?do=spare_parts_r&lang=' + $rootScope.lang_id + '&art_id=' + art_id + '&order=' + order_id + '&offset=' + $scope.offset + '&search=' + vm.searchTerm).then(function(d) {
                     $scope.apiSparePartsR = $scope.apiSparePartsR.concat(d.data.data);
@@ -695,7 +734,7 @@ angular
                         });
                     }
 
-                    if (d.data.data.length < 30) {
+                    if (d.data.data.length < 100) {
                         $scope.loadModeDataR = false;
                     }
 
@@ -711,7 +750,7 @@ angular
                         });
                     }
 
-                    if (d.data.data.length < 30) {
+                    if (d.data.data.length < 100) {
                         $scope.loadModeData = false;
                     }
                     $ionicLoading.hide();

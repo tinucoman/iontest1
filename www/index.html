@@ -23,7 +23,8 @@
      <script type="text/javascript" src="cordova.js"></script> 
     
    <script src="js/app.js"></script>
-    <script src="js/config.js"></script>
+   <script src="js/config.js"></script>
+   <script src="js/appUpdate.js"></script>
     <script src="js/translations.js"></script>
     <script src="js/routes.js"></script>
    <script src="js/controllers/mlistCtrl.js"></script>
@@ -58,7 +59,7 @@
             <i class="icon ion-android-person"></i>
           </div>
           <h2 class="greeting">{{firstname}} {{lastname}}</h2>
-          <p class="message"  translate="WELCOME_BACK"></p>
+          <p class="message">Version: {{versionName}}</p>
         </ion-item>
           <ion-item class="item-icon-left item-dark" nav-clear="" menu-close="" ui-sref="mlist">
               <i class="icon ion-android-clipboard"></i>
@@ -81,6 +82,10 @@
           <i class="icon ion-ios-checkmark"></i>
           <span class="menu-text"  translate="ARCHIVED_ORDERS">Afgewerkt</span>
         </ion-item>
+        <ion-item class="item-icon-left item-dark" nav-clear="" menu-close=""  ng-show="updateAvailable"  ng-click="updateMe()">
+          <i class="icon ion-android-download"></i>
+          <span class="menu-text" translate="UPDATE"></span>
+      </ion-item>
         <ion-item class="item-icon-left item-dark" nav-clear="" menu-close="" ng-click="logout()">
           <i class="icon ion-log-out"></i>
           <span class="menu-text" translate="SIGN_OUT"></span>
@@ -118,9 +123,26 @@
 
                </div>
                </form>
-               <div class="row center">Version: {{version}}</div>
+               <div class="row center">Version: {{versionName}}</div>
            </ion-content>
        </ion-modal-view>
    </script>
+
+   <script id="templates/update.html" type="text/ng-template">
+    <ion-modal-view>
+        <ion-header-bar class="bar bar-header bar-dark">
+            <h1 class="title" translate="NEW_VERSION_AVAILABLE"></h1>
+            <button class="button button-clear button-primary" ng-click="updateModal.hide()" translate="CANCEL"></button>
+        </ion-header-bar>
+        <ion-content class="padding">
+
+            <h4>Version {{newVersionName}} is available</h4>
+            <div ng-show="downloadingUpdate">Downloading...</div>
+            <div ng-show="downloadingUpdate">Please restart application after upgrade</div>
+         <button class="button button-full button-calm" ng-click="startUpdate()">Update Now</button>
+        </ion-content>
+    </ion-modal-view>
+</script>
+
 </body>
 </html>

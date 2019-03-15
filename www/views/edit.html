@@ -356,7 +356,7 @@
                     <div class="bar bar-subheader item-input-inset">
                         <label class="item-input-wrapper">
                             <i class="icon ion-ios-search placeholder-icon"></i>
-                            <input type="text" placeholder="..." name="searchTerm" ng-model="vm.searchTerm" ng-keyup="searchSparePart(vm.order.DEVICE_CAT_NR, vm.searchTerm)">
+                            <input type="text" placeholder="..." name="searchTerm" ng-model="vm.searchTerm" ng-keyup="searchSparePart(vm.order.DEVICE_CAT_NR)">
                         </label>
                         <button class="button button-clear button-dark" ng-click="barcodeScan(vm.order.DEVICE_CAT_NR)"><i class="icon ion-ios-barcode-outline"></i></button>
                     </div>
@@ -409,15 +409,14 @@
                             </div>
                         </ion-list>
                     </ion-content>
-                    <ion-infinite-scroll on-infinite="loadMoreR(vm.order.DEVICE_CAT_NR)" distance="1%">
-                    </ion-infinite-scroll>
+                    
                 </ion-tab>
 
                 <ion-tab title="Spare Parts" icon-on="ion-ios-cog" icon-off="ion-ios-cog-outline">
                     <div class="bar bar-subheader item-input-inset">
                         <label class="item-input-wrapper">
                             <i class="icon ion-ios-search placeholder-icon"></i>
-                            <input type="text" placeholder="..." name="searchTerm" ng-model="vm.searchTerm" ng-keyup="searchSparePart(vm.order.DEVICE_CAT_NR, vm.searchTerm)">
+                            <input type="text" placeholder="..." name="searchTerm" ng-model="vm.searchTerm" ng-keyup="searchSparePart(vm.order.DEVICE_CAT_NR)">
                         </label>
                         <button class="button button-clear button-dark" ng-click="barcodeScan(vm.order.DEVICE_CAT_NR)"><i class="icon ion-ios-barcode-outline"></i></button>
                     </div>
@@ -517,10 +516,11 @@
                                 </ion-item>
                             </div>
                         </ion-list>
+                        <ion-infinite-scroll on-infinite="loadMore(vm.order.DEVICE_CAT_NR)" distance="1%">
+                        </ion-infinite-scroll>
                     </ion-content>
 
-                    <ion-infinite-scroll on-infinite="loadMore(vm.order.DEVICE_CAT_NR)" distance="1%">
-                    </ion-infinite-scroll>
+                    
                 </ion-tab>
 
                 <ion-tab title="Exploded Views" icon-on="ion-ios-paper" icon-off="ion-ios-paper-outline">
