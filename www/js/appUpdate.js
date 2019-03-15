@@ -3,8 +3,8 @@ angular
     .module('asogem')
     .constant('appVersion', {
         debug: false,
-        version: '118',
-        versionName: '1.1.8',
+        version: '120',
+        versionName: '1.2.0',
         updateUrl: 'https://asogem.be/repairapk/nl/production/'
  //       updateUrl: 'https://asogem.be/repairapk/be/production/'
     })
