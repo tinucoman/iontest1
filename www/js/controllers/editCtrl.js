@@ -701,7 +701,10 @@ angular
 
 
             $scope.loadModalData = function(art_id, order_id) {
+                /*
 if(!order_id){
+    // we have a search
+    alert("search");
     $http.get('http://repair.asogem.be/index.php?do=spare_parts&lang=' + $rootScope.lang_id + '&art_id=' + art_id + '&offset=' + $scope.offset + '&search=' + vm.searchTerm).then(function(d) {
         $scope.apiSpareParts = $scope.apiSpareParts.concat(d.data.data);
         $scope.apiSparePartsR = $scope.apiSparePartsR.concat(d.data.data);
@@ -725,6 +728,7 @@ if(!order_id){
         return true;
     });
 }
+*/
                 //var dataSP = { 'do': 'splist', art_id: art_id, offset: $scope.offset, search: vm.searchTerm };
                 $http.get('http://repair.asogem.be/index.php?do=spare_parts_r&lang=' + $rootScope.lang_id + '&art_id=' + art_id + '&order=' + order_id + '&offset=' + $scope.offset + '&search=' + vm.searchTerm).then(function(d) {
                     $scope.apiSparePartsR = $scope.apiSparePartsR.concat(d.data.data);
