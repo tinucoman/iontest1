@@ -8,8 +8,10 @@ angular
         isPhonegap: true,
         benl: 1,
         lang_id: '1',
-        version: '1.1.8',
-        apiUrl: 'http://localhost/proiecte/asogem-repair/'
+        version: '120',
+        versionName: '1.2.0',
+        apiUrl: 'http://localhost/proiecte/asogem-repair/',
+        updateUrl: 'https://asogem.be/repairapk/nl/production/'
     });
 */
 
@@ -21,8 +23,10 @@ angular
         isPhonegap: true,
         benl: 2,
         lang_id: '1',
-        version: '1.1.8',
-        apiUrl: 'http://repair.asogem.nl/'
+        version: '120',
+        versionName: '1.2.0',
+        apiUrl: 'http://repair.asogem.nl/',
+        updateUrl: 'https://asogem.be/repairapk/nl/production/'
         //apiUrl: 'http://repair.asogem.nl/staging/'
     });
 
@@ -37,8 +41,10 @@ angular
         isPhonegap: true,
         benl: 1,
         lang_id: '1',
-        version: '1.1.8',
+        version: '120',
+        versionName: '1.2.0',
         //apiUrl: 'http://repair.asogem.be/'
-        apiUrl: 'http://repair.asogem.be/staging/'
+        apiUrl: 'http://repair.asogem.be/staging/',
+        updateUrl: 'https://asogem.be/repairapk/be/production/'
     });
 */

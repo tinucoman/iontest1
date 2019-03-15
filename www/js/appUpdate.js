@@ -1,25 +1,20 @@
-
 angular
     .module('asogem')
     .constant('appVersion', {
-        debug: false,
-        version: '120',
-        versionName: '1.2.0',
-        updateUrl: 'https://asogem.be/repairapk/nl/production/'
- //       updateUrl: 'https://asogem.be/repairapk/be/production/'
+        debug: false
     })
-    .run(function ($rootScope, appVersion, $http, $ionicModal) {
+    .run(function ($rootScope, appVersion, appConfig, $http, $ionicModal) {
         $rootScope.updateAvailable = false;
         $rootScope.downloadingUpdate = false;
         var timestamp = Math.floor(Date.now() / 1000);
-        $http.get(appVersion.updateUrl + 'version.json?'+timestamp).then(function (response) {
+        $http.get(appConfig.updateUrl + 'version.json?'+timestamp).then(function (response) {
             $rootScope.newVersion = response.data.version;
             $rootScope.newVersionName = response.data.versionName;
             $rootScope.newVersionDescription = response.data.versionDescription;
             $rootScope.installFile = response.data.installFile;
 
-            $rootScope.version = appVersion.version;
-            $rootScope.versionName = appVersion.versionName;
+            $rootScope.version = appConfig.version;
+            $rootScope.versionName = appConfig.versionName;
 
             if(appVersion.debug == true)
             {
@@ -105,7 +100,7 @@ angular
                             $rootScope.downloadingUpdate = true;
 
                             fileTransfer = new FileTransfer();
-                            fileTransfer.download(appVersion.updateUrl + $rootScope.installFile, localPath, function (entry) {
+                            fileTransfer.download(appConfig.updateUrl + $rootScope.installFile, localPath, function (entry) {
                                 $rootScope.downloadingUpdate = false;
                                 if(appVersion.debug == true)
                                 {
