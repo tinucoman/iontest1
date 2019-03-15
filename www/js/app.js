@@ -160,6 +160,10 @@ angular.module('asogem', ['ionic',
                         $timeout(function(){
                             $rootScope.modal.hide();
                         },0);
+
+                        if($rootScope.updateAvailable){
+                            $rootScope.updateMe();
+                        }
                     }
                 }, function(err){
                     $rootScope.allData = err;
