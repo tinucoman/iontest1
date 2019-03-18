@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.ionicframework.asogem460842" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Asogem Repair Be</name>
-    <description>Asogem Repair App</description>
+    <description>Asogem Repair Be App</description>
     <author email="tinu@akti.com" href="http://akti.com/">Tinu Coman</author>
     <content src="index.html" />
     <access origin="*" />
